@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MapTests.SmallBucketMapTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2016-09-18T01:04:37" hostname="painappuru" time="0.021">
+  <properties/>
+  <testcase name="setUp" classname="MapTests.SmallBucketMapTest" time="0.002"/>
+  <testcase name="testGet" classname="MapTests.SmallBucketMapTest" time="0.001"/>
+  <testcase name="testSize" classname="MapTests.SmallBucketMapTest" time="0.002"/>
+  <testcase name="testContains" classname="MapTests.SmallBucketMapTest" time="0.002"/>
+  <testcase name="testRemove" classname="MapTests.SmallBucketMapTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
