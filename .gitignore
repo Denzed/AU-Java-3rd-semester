@@ -1,0 +1,5 @@
+# gradle build directory
+build/
+
+# java build directory
+bin/
