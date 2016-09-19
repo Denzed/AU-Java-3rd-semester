@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MapTests.MapRemoveTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2016-09-18T01:04:36" hostname="painappuru" time="0.334">
-  <properties/>
-  <testcase name="setUp" classname="MapTests.MapRemoveTest" time="0.318"/>
-  <testcase name="testRemove" classname="MapTests.MapRemoveTest" time="0.016"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
