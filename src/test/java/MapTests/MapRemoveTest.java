@@ -17,9 +17,9 @@ public class MapRemoveTest extends Assert {
 
 	@Test
 	public void testRemove() {
+		assertEquals("Not school", map.remove("AU"));
 		assertEquals("School", map.remove("179"));
 		assertNull(map.remove("179"));
-		assertEquals("Not school", map.remove("AU"));
 		assertNull(map.remove("IFMO"));
 	}
 }
