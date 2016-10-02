@@ -1,6 +1,6 @@
 package TrieTests;
 
-import Trie.Bor;
+import Trie.Trie;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,7 +9,7 @@ public class DoubleActionTest extends Assert {
 	@Test
 	public void doubleInsert() {
 		String sample = "NICETOMEETYOU";
-		Bor bor = new Bor();
+		Trie bor = new Trie();
 		assertFalse(bor.add(sample));
 		assertEquals(1, bor.size());
 		assertTrue(bor.add(sample));
@@ -21,7 +21,7 @@ public class DoubleActionTest extends Assert {
 	@Test
 	public void doubleRemove() {
 		String sample = "ORNOT";
-		Bor bor = new Bor();
+		Trie bor = new Trie();
 		assertFalse(bor.add(sample));
 		assertEquals(1, bor.size());
 		assertTrue(bor.remove(sample));

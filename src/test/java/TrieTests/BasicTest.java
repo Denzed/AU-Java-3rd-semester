@@ -1,6 +1,6 @@
 package TrieTests;
 
-import Trie.Bor;
+import Trie.Trie;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,7 +8,7 @@ public class BasicTest extends Assert {
 
 	@Test
 	public void Size() {
-		Bor bor = new Bor();
+		Trie bor = new Trie();
 		assertFalse(bor.add("LOLLOL"));
 		assertTrue(bor.contains("LOLLOL"));
 		assertFalse(bor.contains("OLOLO"));
@@ -21,7 +21,7 @@ public class BasicTest extends Assert {
 
 	@Test
 	public void Prefix() {
-		Bor bor = new Bor();
+		Trie bor = new Trie();
 		assertFalse(bor.add("LOLLOL"));
 		assertEquals(1, bor.howManyStartsWithPrefix("LOL"));
 		assertEquals(0, bor.howManyStartsWithPrefix("O"));

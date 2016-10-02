@@ -1,6 +1,6 @@
 package TrieTests;
 
-import Trie.Bor;
+import Trie.Trie;
 import org.junit.Assert;
 import org.junit.Test;
 import java.io.PipedOutputStream;
@@ -13,14 +13,14 @@ public class SerializeTest extends Assert {
 	public void test() throws IOException {
 		String sample[] = {"GREEK", "QUESTION", "MARK",
 		                   "LOOKS", "LIKE", "SEMICOLON"};
-		Bor bor = new Bor();
+		Trie bor = new Trie();
 		for (String s: sample) {
 			assertFalse(bor.add(s));
 		}
 		PipedInputStream in = new PipedInputStream();
 		PipedOutputStream out = new PipedOutputStream(in);
 		bor.serialize(out);
-		Bor result = new Bor();
+		Trie result = new Trie();
 		result.deserialize(in);
 		assertTrue(bor.equals(result));
 	}

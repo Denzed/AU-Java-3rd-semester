@@ -1,6 +1,6 @@
 package TrieTests;
 
-import Trie.Bor;
+import Trie.Trie;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,7 +8,7 @@ public class PrefixTest extends Assert {
 
 	@Test
 	public void testPrefixDoesNotExist() {
-		Bor bor = new Bor();
+		Trie bor = new Trie();
 		assertFalse(bor.add("LOLLOL"));
 		assertTrue(bor.add("LOLLOL"));
 		assertTrue(bor.contains("LOLLOL"));
@@ -23,7 +23,7 @@ public class PrefixTest extends Assert {
 
 	@Test
 	public void testPrefixExists() {
-		Bor bor = new Bor();
+		Trie bor = new Trie();
 		assertFalse(bor.add("LOLLOL"));
 		assertEquals(1, bor.howManyStartsWithPrefix("LOL"));
 		assertFalse(bor.add("LOLLIPOP"));

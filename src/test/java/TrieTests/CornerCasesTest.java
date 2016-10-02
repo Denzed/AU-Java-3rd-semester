@@ -1,6 +1,6 @@
 package TrieTests;
 
-import Trie.Bor;
+import Trie.Trie;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,7 +8,7 @@ public class CornerCasesTest extends Assert {
 
 	@Test
 	public void emptyPrefix() {
-		Bor bor = new Bor();
+		Trie bor = new Trie();
 		assertFalse(bor.add(""));
 		assertTrue(bor.contains(""));
 		assertFalse(bor.add("LOL"));
@@ -24,7 +24,7 @@ public class CornerCasesTest extends Assert {
 
 	@Test
 	public void wholeWordPrefixLookup() {
-		Bor bor = new Bor();
+		Trie bor = new Trie();
 		assertFalse(bor.add("LOLLOL"));
 		assertEquals(1, bor.howManyStartsWithPrefix("LOL"));
 		assertEquals(1, bor.howManyStartsWithPrefix("LOLLOL"));
