@@ -1,0 +1,8 @@
+# gradle build directory
+build/
+
+# java build directory
+bin/
+
+# we don't need logs
+*.log
