@@ -8,26 +8,26 @@ public class BasicTest extends Assert {
 
 	@Test
 	public void Size() {
-		Trie bor = new Trie();
-		assertFalse(bor.add("LOLLOL"));
-		assertTrue(bor.contains("LOLLOL"));
-		assertFalse(bor.contains("OLOLO"));
-		assertEquals(1, bor.size());
-		assertTrue(bor.remove("LOLLOL"));
-		assertEquals(0, bor.size());
-		assertFalse(bor.contains("LOLLOL"));
+		Trie trie = new Trie();
+		assertFalse(trie.add("LOLLOL"));
+		assertTrue(trie.contains("LOLLOL"));
+		assertFalse(trie.contains("OLOLO"));
+		assertEquals(1, trie.size());
+		assertTrue(trie.remove("LOLLOL"));
+		assertEquals(0, trie.size());
+		assertFalse(trie.contains("LOLLOL"));
 	}
 	
 
 	@Test
 	public void Prefix() {
-		Trie bor = new Trie();
-		assertFalse(bor.add("LOLLOL"));
-		assertEquals(1, bor.howManyStartsWithPrefix("LOL"));
-		assertEquals(0, bor.howManyStartsWithPrefix("O"));
-		assertEquals(1, bor.size());
-		assertTrue(bor.remove("LOLLOL"));
-		assertEquals(0, bor.size());
-		assertEquals(0, bor.howManyStartsWithPrefix("LOL"));
+		Trie trie = new Trie();
+		assertFalse(trie.add("LOLLOL"));
+		assertEquals(1, trie.howManyStartsWithPrefix("LOL"));
+		assertEquals(0, trie.howManyStartsWithPrefix("O"));
+		assertEquals(1, trie.size());
+		assertTrue(trie.remove("LOLLOL"));
+		assertEquals(0, trie.size());
+		assertEquals(0, trie.howManyStartsWithPrefix("LOL"));
 	}
 }

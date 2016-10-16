@@ -13,15 +13,15 @@ public class SerializeTest extends Assert {
 	public void test() throws IOException {
 		String sample[] = {"GREEK", "QUESTION", "MARK",
 		                   "LOOKS", "LIKE", "SEMICOLON"};
-		Trie bor = new Trie();
+		Trie trie = new Trie();
 		for (String s: sample) {
-			assertFalse(bor.add(s));
+			assertFalse(trie.add(s));
 		}
 		PipedInputStream in = new PipedInputStream();
 		PipedOutputStream out = new PipedOutputStream(in);
-		bor.serialize(out);
+		trie.serialize(out);
 		Trie result = new Trie();
 		result.deserialize(in);
-		assertTrue(bor.equals(result));
+		assertTrue(trie.equals(result));
 	}
 }
