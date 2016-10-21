@@ -1,43 +1,43 @@
 package Functional;
 
 abstract public class Predicate<F> extends Function1<F,Boolean> {
-	private class Or extends Predicate<F> {
-		Predicate<F> g;
+	private class Or<Pred extends Predicate<? super F>> extends Predicate<F> {
+		Pred g;
 		
-		private Or(Predicate<F> _g) {
+		private Or(Pred _g) {
 			g = _g;
 		}
 		
 		@Override
-		public Boolean apply(F arg) {
+		public <Arg extends F> Boolean apply(Arg arg) {
 			return Predicate.this.apply(arg) || g.apply(arg);
 		}
 	}
 	
-	public Predicate<F> or(Predicate<F> g) {
-		return new Or(g);
+	public <Pred extends Predicate<? super F>> Predicate<F> or(Pred g) {
+		return new Or<Pred>(g);
 	}
 	
-	private class And extends Predicate<F> {
-		Predicate<F> g;
+	private class And<Pred extends Predicate<? super F>> extends Predicate<F> {
+		Pred g;
 		
-		private And(Predicate<F> _g) {
+		private And(Pred _g) {
 			g = _g;
 		}
 		
 		@Override
-		public Boolean apply(F arg) {
+		public <Arg extends F> Boolean apply(Arg arg) {
 			return Predicate.this.apply(arg) && g.apply(arg);
 		}
 	}
 	
-	public Predicate<F> and(Predicate<F> g) {
-		return new And(g);
+	public <Pred extends Predicate<? super F>> Predicate<F> and(Pred g) {
+		return new And<Pred>(g);
 	}
 	
 	private class Not extends Predicate<F> {
 		@Override
-		public Boolean apply(F arg) {
+		public <Arg extends F> Boolean apply(Arg arg) {
 			return !Predicate.this.apply(arg);
 		}
 	}
@@ -46,13 +46,19 @@ abstract public class Predicate<F> extends Function1<F,Boolean> {
 		return new Not();
 	}
 	
-	private class pTrue extends Predicate<F> {
+	private static class pConst<F> extends Predicate<F> {
+		boolean c;
+		
+		private pConst(boolean _c) {
+			c = _c;
+		}
+		
 		@Override
-		public Boolean apply(F arg) {
-			return true;
+		public <Arg extends F> Boolean apply(Arg arg) {
+			return c;
 		}
 	}
 
-	public Predicate<F> ALWAYS_TRUE = new pTrue();
-	public Predicate<F> ALWAYS_FALSE = ALWAYS_TRUE.not(); 
+	public static final Predicate<Object> ALWAYS_TRUE = new pConst<Object>(true);
+	public static final Predicate<Object> ALWAYS_FALSE = new pConst<Object>(false);
 }

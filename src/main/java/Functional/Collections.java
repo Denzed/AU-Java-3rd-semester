@@ -7,52 +7,65 @@ public class Collections {
 		return new LinkedList<>();
 	}
 	
-	static public <T,A extends Iterable<T>,F> LinkedList<F> map(Function1<T,F> func, A a) {
+	static public <T,A extends Iterable<T>,
+				   F,Func extends Function1<? super T,F>> LinkedList<F> map(Func func, A a) {
 		LinkedList<F> result = makeEmptyLinkedList();
-		System.err.println("OK\n");
 		for (T elem: a) {
-			result.add(func.apply(elem));
+			result.addLast(func.apply(elem));
 		}
 		return result;
 	}
 	
-	static public <T,A extends Iterable<T>> LinkedList<T> filter(Predicate<T> pred, A a) {
+	static public <T,A extends Iterable<T>,
+					 Pred extends Predicate<? super T>> LinkedList<T> filter(Pred pred, A a) {
 		LinkedList<T> result = makeEmptyLinkedList();
 		for (T elem: a) {
 			if (pred.apply(elem)) {
-				result.add(elem);
+				result.addLast(elem);
 			}
 		}
 		return result;
 	}
 	
-	static public <T,A extends Iterable<T>> LinkedList<T> takeWhile(Predicate<T> pred, A a) {
+	static public <T,A extends Iterable<T>,Pred extends Predicate<? super T>> LinkedList<T> takeWhile(Pred pred, A a) {
 		LinkedList<T> result = makeEmptyLinkedList();
 		for (T elem: a) {
 			if (!pred.apply(elem)) {
 				break;
 			}
-			result.add(elem);
+			result.addLast(elem);
 		}
 		return result;
 	}
 	
-	static public <T,A extends Iterable<T>> LinkedList<T> takeUnless(Predicate<T> pred, A a) {
+	static public <T,A extends Iterable<T>,Pred extends Predicate<? super T>> LinkedList<T> takeUnless(Pred pred, A a) {
 		return takeWhile(pred.not(), a);
 	}
-
-	// LinkedList is required because otherwise it is pointless (I mean use of unordered Collections)	
-	static public <T,A extends LinkedList<T>> T foldl(Function2<T,T,T> func, T baseValue, A a) {
-		for (T elem: a) {
+	
+	static public <T,U,A extends Iterable<U>,
+	 			     Func extends Function2<? super T,
+	 			   						    ? super U,
+	 			   						    ? extends T>> T foldl(Func func, T baseValue, A a) {
+		for (U elem: a) {
 			baseValue = func.apply(baseValue, elem);
 		}
 		return baseValue;
 	}
-
-	static public <T,A extends LinkedList<T>> T foldr(Function2<T,T,T> func, T baseValue, A a) {
-		java.util.Collections.reverse(a);
-		baseValue = foldl(func.flip(), baseValue, a);
-		java.util.Collections.reverse(a);
-		return baseValue;
+	
+	static private class Identity<T> extends Function1<T,T> {
+		@Override
+		public <Arg extends T> T apply(Arg arg) {
+			return arg;
+		}
+		
 	}
+	
+	static public <T,U,A extends Iterable<U>,
+					 Func extends Function2<? super U,? super T,? extends T>> T foldr(Func func, T baseValue, A a) {
+		Function1<? super T,? extends T> cur = new Identity<T>();  
+		for (U elem: a) {
+			cur = func.bind1(elem).compose(cur);
+		}
+		return cur.apply(baseValue);
+	}	
 }
