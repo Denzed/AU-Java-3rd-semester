@@ -3,11 +3,16 @@ import java.util.HashMap;
 import org.junit.*;
 
 public class PredicateTest extends Assert {
-	HashMap<Boolean,Predicate<Object>> booleanConstants = new HashMap<Boolean,Predicate<Object>>(); 
-	{
+	private static final HashMap<Boolean,Predicate<Object>> booleanConstants = new HashMap<Boolean,Predicate<Object>>(); 
+	static {
 		booleanConstants.put(true, Predicate.ALWAYS_TRUE);
 		booleanConstants.put(false, Predicate.ALWAYS_FALSE); 
 	}
+	
+	Predicate<Object> undefined = (arg) -> {
+		Integer fail = 1 / 0; // in order not to throw exceptions
+		return fail != 0;
+	};
 
 	@Test
 	public void testOr() {
@@ -32,12 +37,16 @@ public class PredicateTest extends Assert {
 	}
 	
 	@Test
-	public void testNot() {
-		assertEquals(true, booleanConstants.get(false).not().apply(true));
-		assertEquals(false, booleanConstants.get(true).not().apply(true));
-		assertEquals(true, booleanConstants.get(false).not().apply(false));
-		assertEquals(false, booleanConstants.get(true).not().apply(false));
+	public void testLaziness() {
+		assertTrue(booleanConstants.get(true).or(undefined).apply(true));
+		assertFalse(booleanConstants.get(false).and(undefined).apply(true));
 	}
-
 	
+	@Test
+	public void testNot() {
+		assertTrue(booleanConstants.get(false).not().apply(true));
+		assertFalse(booleanConstants.get(true).not().apply(true));
+		assertTrue(booleanConstants.get(false).not().apply(false));
+		assertFalse(booleanConstants.get(true).not().apply(false));
+	}
 }

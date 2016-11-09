@@ -1,22 +1,10 @@
 package Functional;
 
-public abstract class Function1<F,T> {
-	abstract public <Arg extends F> T apply(Arg arg);
+@FunctionalInterface
+public interface Function1<F,T> {
+	abstract public T apply(F x);
 	
-	public class Compose<T2,Func extends Function1<? super T,T2>> extends Function1<F,T2> {
-		Func g;
-		
-		private Compose(Func _g) {
-			g = _g;
-		}
-
-		@Override
-		public <Arg extends F> T2 apply(Arg arg) {
-			return g.apply(Function1.this.apply(arg));
-		}
-	}
-	
-	public <T2,Func extends Function1<? super T,T2>> Compose<T2,Func> compose(Func g) {
-		return new Compose<T2,Func>(g);
+	default public <T2> Function1<F,T2> compose(Function1<? super T,T2> g) {
+		return (arg) -> g.apply(apply(arg));
 	}
 }

@@ -2,42 +2,15 @@ import Functional.*;
 import org.junit.*;
 
 public class FunctionTest extends Assert {
-	private class Square extends Function1<Integer,Integer> {
-		@Override
-		public Integer apply(Integer x) {
-			return x * x;
-		}
-	}
+	static Function2<Object,Object,Integer> sum = (a, b) -> ((Integer) a) + ((Integer) b);
+	static Function2<Object,Object,Integer> pow = (base, power) -> {
+		int res = 1, n = (Integer) base, p = (Integer) power;
+		for (; p-- > 0; res *= n); // linear time is enough for simple testing
+		return res;
+	};
+	static Function1<Object,Integer> 		db  = (arg) -> sum.apply(arg, arg);
+	static Function1<Object,Integer> 		sq  = (arg) -> pow.apply(arg, 2);
 	
-	private class Double extends Function1<Integer,Integer> {
-		@Override
-		public Integer apply(Integer x) {
-			return 2 * x;
-		}
-	}
-
-	Double db = new Double();
-	Square sq = new Square();
-	
-	private class Sum extends Function2<Integer,Integer,Integer> {
-		@Override
-		public <Arg1 extends Integer, Arg2 extends Integer> Integer apply(Arg1 arg1, Arg2 arg2) {
-			return arg1 + arg2;
-		}
-	}
-	
-	private class Pow extends Function2<Integer,Integer,Integer> {
-		@Override
-		public <Arg1 extends Integer, Arg2 extends Integer> Integer apply(Arg1 arg1, Arg2 arg2) {
-			int res = 1, n = arg1, p = arg2;
-			for (; p-- > 0; res *= n); // linear time is enough for simple testing
-			return res;
-		}
-	}
-
-	Sum sum = new Sum();
-	Pow pow = new Pow();
-
 
 	@Test
 	public void composeTest() {
