@@ -48,7 +48,9 @@ public final class SecondPartTasks {
         	return x * x + y * y;
         })
         			 .limit(ITERATIONS)
-        		     .collect(Collectors.averagingInt((dist) -> (dist <= 0.25 ? 1 : 0)));
+        			 .mapToInt(dist -> dist <= 0.25 ? 1 : 0)
+        		     .average()
+        		     .orElse(0);
     }
 
     // Дано отображение из имени автора в список с содержанием его произведений.
