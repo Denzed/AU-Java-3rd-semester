@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -20,17 +21,15 @@ public final class SecondPartTasks {
     	return paths.stream()
     				.map(Paths::get)
     				.flatMap(file -> {
-    					Stream.Builder<String> tmp = Stream.builder();
-    					Stream<String> res = tmp.build();
     					try {
-							res = Files.lines(file);
+							return Files.lines(file);
 						} catch (IOException e) {
 							System.err.println(String.format(
 									"An error occured while reading %s -- skipped", 
 									file.toString()));
 							e.printStackTrace();
 						}
-						return res;
+    					return null;
 					})
     				.filter(line -> line.contains(sequence))
     			    .collect(Collectors.toList());
@@ -43,7 +42,7 @@ public final class SecondPartTasks {
         final Random gen = new java.util.Random();
         final long ITERATIONS = 1000000;
         return Stream.generate(() -> {
-        	Double x = gen.nextDouble() - 0.5,
+        	double x = gen.nextDouble() - 0.5,
         		   y = gen.nextDouble() - 0.5;
         	return x * x + y * y;
         })
@@ -66,7 +65,7 @@ public final class SecondPartTasks {
         						   				  		   String::length))))
         				   .entrySet()
         				   .stream()
-        				   .max((e1, e2) -> e1.getValue().compareTo(e2.getValue()))
+        				   .max(Comparator.comparing(Map.Entry::getValue))
         				   .get()
         				   .getKey();
     }
@@ -75,12 +74,9 @@ public final class SecondPartTasks {
     // Необходимо вычислить, какой товар и в каком количестве надо поставить.
     public static Map<String, Integer> calculateGlobalOrder(List<Map<String, Integer>> orders) {
         return orders.stream()
-        			 .reduce(Collections.emptyMap(), 
-        					 (m1, m2) -> Stream.of(m1, m2)
-        						 	   		   .map(Map::entrySet)
-        						 	   		   .flatMap(Collection::stream)
-        						 	   		   .collect(Collectors.toMap(Map.Entry::getKey, 
-        						 			   					 		 Map.Entry::getValue,
-        						 			   					 		 Integer::sum)));
+        			 .map(Map::entrySet)
+        			 .flatMap(Collection::stream)
+        			 .collect(Collectors.groupingBy(Map.Entry::getKey,
+		   						  Collectors.summingInt(Map.Entry::getValue)));
     }
 }

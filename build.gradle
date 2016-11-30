@@ -29,5 +29,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     
     // Google Guava
-    compile 'com.google.guava:guava:20.0'
+    testCompile 'com.google.guava:guava:20.0'
 }

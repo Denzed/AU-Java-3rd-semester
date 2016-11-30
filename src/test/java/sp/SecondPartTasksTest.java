@@ -21,12 +21,12 @@ public class SecondPartTasksTest {
     public void testFindQuotes() {
     	String file = Paths.get("src", "main", "java", "sp", "SecondPartTasks.java")
     			  		   .toString();
-        assertEquals(Arrays.asList("package sp;"),
-   			 		 findQuotes(Arrays.asList(file), "pack"));
+        assertEquals(Collections.singletonList("package sp;"),
+   			 		 findQuotes(Collections.singletonList(file), "pack"));
         assertEquals(Arrays.asList(),
-			 		 findQuotes(Arrays.asList(), "pack"));
+			 		 findQuotes(Collections.emptyList(), "pack"));
         assertEquals(Arrays.asList(),
-        			 findQuotes(Arrays.asList(file), "peck"));
+        			 findQuotes(Collections.singletonList(file), "peck"));
     }
 
     @Test
